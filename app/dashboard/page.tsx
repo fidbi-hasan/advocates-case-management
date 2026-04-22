@@ -11,7 +11,7 @@ import {
 import { ActionBar } from "@/components/dashboard/ActionBar";
 import { CaseTable } from "@/components/dashboard/CaseTable";
 import { CaseDialog } from "@/components/dashboard/CaseDialog";
-import { getAllCases, getCasesByFilter } from "@/services/caseData";
+import { getAllCases, getCasesByFilter, deleteCases } from "@/services/caseData";
 import type { LegalCase } from "@/data/mockCases";
 import { Briefcase, Filter, Zap } from "lucide-react";
 
@@ -107,12 +107,12 @@ export default function DashboardPage() {
     if (!confirm(`Are you sure you want to delete ${selectedIds.size} case(s)?`)) return;
 
     setLoading(true);
-    const { error } = await import("@/services/caseData").then(m => m.deleteCases(Array.from(selectedIds)));
+    const { error } = await deleteCases(Array.from(selectedIds));
     
     if (error) {
-      import("sonner").then(m => m.toast.error("Failed to delete cases"));
+      toast.error("Failed to delete cases");
     } else {
-      import("sonner").then(m => m.toast.success(`${selectedIds.size} case(s) deleted successfully`));
+      toast.success(`${selectedIds.size} case(s) deleted successfully`);
       const data = await getAllCases();
       setCases(data);
       setSelectedIds(new Set());

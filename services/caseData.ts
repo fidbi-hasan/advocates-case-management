@@ -294,6 +294,11 @@ async function uploadWithProgress(
   file: File, 
   onProgress?: (percent: number) => void
 ): Promise<string> {
+  // Ensure we are on the client
+  if (typeof XMLHttpRequest === "undefined") {
+    throw new Error("Upload can only be performed in the browser");
+  }
+
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     const bucket = "case-documents";
