@@ -41,9 +41,9 @@ import { PDFViewerDialog } from "./PDFViewerDialog";
 interface CaseTableProps {
   cases: LegalCase[];
   selectedIds: Set<string>;
-  onSelectionChange: (ids: Set<string>) => void;
-  onEditCase?: (c: LegalCase) => void;
-  onRefresh?: () => void;
+  onSelectionChangeAction: (ids: Set<string>) => void;
+  onEditCaseAction?: (c: LegalCase) => void;
+  onRefreshAction?: () => void;
 }
 
 const ROWS_PER_PAGE = 10;
@@ -178,9 +178,9 @@ function formatDate(dateStr: string): string {
 export function CaseTable({
   cases,
   selectedIds,
-  onSelectionChange,
-  onEditCase,
-  onRefresh,
+  onSelectionChangeAction,
+  onEditCaseAction,
+  onRefreshAction,
 }: CaseTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [viewerOpen, setViewerOpen] = useState(false);
@@ -214,7 +214,7 @@ export function CaseTable({
     } else {
       pageData.forEach((c) => newSet.add(c.id));
     }
-    onSelectionChange(newSet);
+    onSelectionChangeAction(newSet);
   };
 
   const toggleOne = (id: string) => {
@@ -224,7 +224,7 @@ export function CaseTable({
     } else {
       newSet.add(id);
     }
-    onSelectionChange(newSet);
+    onSelectionChangeAction(newSet);
   };
 
   return (
@@ -347,14 +347,14 @@ export function CaseTable({
                         <Button
                           size="sm"
                           variant="ghost"
-                          onClick={() => onEditCase?.(c)}
+                          onClick={() => onEditCaseAction?.(c)}
                           className="h-7 w-7 p-0 text-slate-400 hover:text-violet-600 hover:bg-violet-50 rounded cursor-pointer"
                         >
                           <Pencil className="w-3 h-3" />
                         </Button>
                         <UploadPDFButton 
                           caseObj={c} 
-                          onUploadSuccess={onRefresh}
+                          onUploadSuccess={onRefreshAction}
                         />
                         {c.pdfUrls && c.pdfUrls.length > 0 && (
                           <Popover>
@@ -404,7 +404,7 @@ export function CaseTable({
                                                 toast.error("Failed to delete PDF");
                                               } else {
                                                 toast.success("PDF deleted");
-                                                onRefresh?.();
+                                                onRefreshAction?.();
                                               }
                                             }
                                           }}
@@ -439,7 +439,7 @@ export function CaseTable({
 
       <PDFViewerDialog 
         open={viewerOpen} 
-        onOpenChange={setViewerOpen} 
+        onOpenChangeAction={setViewerOpen} 
         pdfUrl={activePdfUrl} 
         caseNo={activeCaseNo} 
       />

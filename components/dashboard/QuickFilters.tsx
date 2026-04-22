@@ -19,10 +19,10 @@ import {
 
 interface QuickFiltersProps {
   activeFilter: string | null;
-  onFilterChange: (filter: string | null) => void;
+  onFilterChangeAction: (filter: string | null) => void;
 }
 
-export function QuickFilters({ activeFilter, onFilterChange }: QuickFiltersProps) {
+export function QuickFilters({ activeFilter, onFilterChangeAction }: QuickFiltersProps) {
   const categoryFilters = [
     { key: "ni", label: "NI Cases", icon: FileWarning, color: "text-amber-600", bg: "bg-amber-50" },
     { key: "ara", label: "ARA Cases", icon: Gavel, color: "text-rose-600", bg: "bg-rose-50" },
@@ -37,7 +37,7 @@ export function QuickFilters({ activeFilter, onFilterChange }: QuickFiltersProps
       <Button
         variant="ghost"
         size="sm"
-        onClick={() => onFilterChange(activeFilter === "tomorrow" ? null : "tomorrow")}
+        onClick={() => onFilterChangeAction(activeFilter === "tomorrow" ? null : "tomorrow")}
         className={`rounded-xl h-10 px-4 text-sm font-medium transition-all duration-200 cursor-pointer shadow-sm ${
           activeFilter === "tomorrow" 
             ? "bg-emerald-600 text-white shadow-emerald-200" 
@@ -51,7 +51,7 @@ export function QuickFilters({ activeFilter, onFilterChange }: QuickFiltersProps
       <Button
         variant="ghost"
         size="sm"
-        onClick={() => onFilterChange(activeFilter === "yesterday" ? null : "yesterday")}
+        onClick={() => onFilterChangeAction(activeFilter === "yesterday" ? null : "yesterday")}
         className={`rounded-xl h-10 px-4 text-sm font-medium transition-all duration-200 cursor-pointer shadow-sm ${
           activeFilter === "yesterday" 
             ? "bg-sky-600 text-white shadow-sky-200" 
@@ -90,7 +90,7 @@ export function QuickFilters({ activeFilter, onFilterChange }: QuickFiltersProps
             return (
               <DropdownMenuItem
                 key={filter.key}
-                onClick={() => onFilterChange(filter.key)}
+                onClick={() => onFilterChangeAction(filter.key)}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-slate-50 focus:bg-slate-50 transition-colors"
               >
                 <div className={`p-1.5 rounded-md ${filter.bg}`}>
@@ -111,7 +111,7 @@ export function QuickFilters({ activeFilter, onFilterChange }: QuickFiltersProps
       <Button
         variant="ghost"
         size="sm"
-        onClick={() => onFilterChange(null)}
+        onClick={() => onFilterChangeAction(null)}
         className={`rounded-xl h-10 px-4 text-sm font-medium transition-all duration-200 cursor-pointer ${
           !activeFilter ? "text-violet-600 bg-violet-50" : "text-slate-500 hover:text-slate-700 hover:bg-slate-100"
         }`}

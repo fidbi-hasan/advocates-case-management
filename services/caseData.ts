@@ -258,15 +258,15 @@ export async function uploadCasePDF(
 
   try {
     // 1. Get current case to get existing pdfUrls
-    const { data: record, error: fetchError } = await supabase
+    const { data, error: fetchError } = await supabase
       .from("cases")
       .select("pdf_urls")
       .eq("id", caseId)
       .single();
 
     if (fetchError) throw fetchError;
-
-    const existingUrls = record.pdf_urls || [];
+    const record = data as { pdf_urls: string[] | null };
+    const existingUrls = record?.pdf_urls || [];
 
     // 2. Upload to Storage using XMLHttpRequest for progress
     const url = await uploadWithProgress(filePath, file, onProgress);
@@ -370,15 +370,15 @@ export async function deleteCasePDF(caseId: string, pdfUrl: string): Promise<{ e
     }
 
     // 3. Get current URLs and remove the deleted one from DB
-    const { data: record, error: fetchError } = await supabase
+    const { data, error: fetchError } = await supabase
       .from("cases")
       .select("pdf_urls")
       .eq("id", caseId)
       .single();
 
     if (fetchError) throw fetchError;
-
-    const currentUrls = record.pdf_urls || [];
+    const record = data as { pdf_urls: string[] | null };
+    const currentUrls = record?.pdf_urls || [];
     const updatedUrls = currentUrls.filter((url: string) => url !== pdfUrl);
 
     // 4. Update Database

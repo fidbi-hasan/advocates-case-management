@@ -11,16 +11,16 @@ import { ExternalLink, Download, X } from "lucide-react";
 
 interface PDFViewerDialogProps {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
   pdfUrl: string | null;
   caseNo: string;
 }
 
-export function PDFViewerDialog({ open, onOpenChange, pdfUrl, caseNo }: PDFViewerDialogProps) {
+export function PDFViewerDialog({ open, onOpenChangeAction, pdfUrl, caseNo }: PDFViewerDialogProps) {
   if (!pdfUrl) return null;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChangeAction}>
       <DialogContent className="sm:max-w-[90vw] h-[90vh] flex flex-col p-0 overflow-hidden border-none shadow-2xl">
         <DialogHeader className="p-4 bg-white border-b flex flex-row items-center justify-between space-y-0">
           <div className="flex items-center gap-3">

@@ -24,12 +24,12 @@ import { type LegalCase } from "@/data/mockCases";
 
 interface CaseDialogProps {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSuccess: () => void;
+  onOpenChangeAction: (open: boolean) => void;
+  onSuccessAction: () => void;
   initialData?: LegalCase | null;
 }
 
-export function CaseDialog({ open, onOpenChange, onSuccess, initialData }: CaseDialogProps) {
+export function CaseDialog({ open, onOpenChangeAction, onSuccessAction, initialData }: CaseDialogProps) {
   const [loading, setLoading] = useState(false);
 
   const defaultValues: Omit<LegalCase, "id"> = {
@@ -94,14 +94,14 @@ export function CaseDialog({ open, onOpenChange, onSuccess, initialData }: CaseD
       toast.error(initialData ? "Failed to update case" : "Failed to add case", { description: error.message });
     } else {
       toast.success(initialData ? "Case updated successfully!" : "Case added successfully!");
-      onSuccess();
-      onOpenChange(false);
+      onSuccessAction();
+      onOpenChangeAction(false);
     }
     setLoading(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChangeAction}>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-slate-800">
@@ -264,7 +264,7 @@ export function CaseDialog({ open, onOpenChange, onSuccess, initialData }: CaseD
             <Button
               type="button"
               variant="outline"
-              onClick={() => onOpenChange(false)}
+              onClick={() => onOpenChangeAction(false)}
               disabled={loading}
               className="cursor-pointer"
             >

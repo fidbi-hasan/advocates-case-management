@@ -24,9 +24,9 @@ interface SearchFilters {
 
 interface AdvancedSearchProps {
   filters: SearchFilters;
-  onFiltersChange: (filters: SearchFilters) => void;
-  onSearch: () => void;
-  onReset: () => void;
+  onFiltersChangeAction: (filters: SearchFilters) => void;
+  onSearchAction: () => void;
+  onResetAction: () => void;
 }
 
 const branches = ["Motijheel", "Gulshan", "Banani", "Dhanmondi"];
@@ -46,12 +46,12 @@ export type { SearchFilters };
 
 export function AdvancedSearch({
   filters,
-  onFiltersChange,
-  onSearch,
-  onReset,
+  onFiltersChangeAction,
+  onSearchAction,
+  onResetAction,
 }: AdvancedSearchProps) {
   const updateFilter = (key: keyof SearchFilters, value: string) => {
-    onFiltersChange({ ...filters, [key]: value });
+    onFiltersChangeAction({ ...filters, [key]: value });
   };
 
   return (
@@ -166,7 +166,7 @@ export function AdvancedSearch({
       <div className="flex items-center gap-2 pt-1">
         <Button
           size="sm"
-          onClick={onSearch}
+          onClick={onSearchAction}
           className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white h-8 px-5 rounded-md text-xs font-medium transition-all duration-200 hover:shadow-md hover:shadow-violet-200 cursor-pointer"
         >
           <Search className="w-3.5 h-3.5 mr-1.5" />
@@ -175,7 +175,7 @@ export function AdvancedSearch({
         <Button
           size="sm"
           variant="ghost"
-          onClick={onReset}
+          onClick={onResetAction}
           className="text-slate-500 hover:text-slate-800 h-8 px-5 rounded-md text-xs font-medium hover:bg-slate-100 cursor-pointer"
         >
           <RotateCcw className="w-3.5 h-3.5 mr-1.5" />

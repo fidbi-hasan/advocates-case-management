@@ -171,8 +171,8 @@ export default function DashboardPage() {
       {/* Case Dialog (Add/Edit) */}
       <CaseDialog 
         open={isDialogOpen} 
-        onOpenChange={setIsDialogOpen} 
-        onSuccess={handleDialogSuccess}
+        onOpenChangeAction={setIsDialogOpen} 
+        onSuccessAction={handleDialogSuccess}
         initialData={editingCase}
       />
 
@@ -220,23 +220,23 @@ export default function DashboardPage() {
       {/* Quick Filters */}
       <QuickFilters
         activeFilter={activeQuickFilter}
-        onFilterChange={handleQuickFilterChange}
+        onFilterChangeAction={handleQuickFilterChange}
       />
 
       {/* Advanced Search */}
       <AdvancedSearch
         filters={searchFilters}
-        onFiltersChange={setSearchFilters}
-        onSearch={handleSearch}
-        onReset={handleReset}
+        onFiltersChangeAction={setSearchFilters}
+        onSearchAction={handleSearch}
+        onResetAction={handleReset}
       />
 
       {/* Action Bar */}
       <ActionBar 
         selectedCount={selectedIds.size} 
-        onDeleteSelected={handleDeleteSelected}
-        onAddCase={handleAddCase}
-        onExport={handleExport}
+        onDeleteSelectedAction={handleDeleteSelected}
+        onAddCaseAction={handleAddCase}
+        onExportAction={handleExport}
       />
 
       {/* Data Table */}
@@ -251,9 +251,9 @@ export default function DashboardPage() {
         <CaseTable
           cases={cases}
           selectedIds={selectedIds}
-          onSelectionChange={setSelectedIds}
-          onEditCase={handleEditCase}
-          onRefresh={handleDialogSuccess}
+          onSelectionChangeAction={setSelectedIds}
+          onEditCaseAction={handleEditCase}
+          onRefreshAction={handleDialogSuccess}
         />
       )}
     </div>

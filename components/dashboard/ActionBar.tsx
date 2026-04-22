@@ -6,17 +6,17 @@ import { toast } from "sonner";
 
 interface ActionBarProps {
   selectedCount: number;
-  onDeleteSelected?: () => void;
-  onAddCase?: () => void;
-  onExport?: () => void;
+  onDeleteSelectedAction?: () => void;
+  onAddCaseAction?: () => void;
+  onExportAction?: () => void;
 }
 
-export function ActionBar({ selectedCount, onDeleteSelected, onAddCase, onExport }: ActionBarProps) {
+export function ActionBar({ selectedCount, onDeleteSelectedAction, onAddCaseAction, onExportAction }: ActionBarProps) {
   return (
     <div className="flex flex-wrap items-center gap-2">
       <Button
         size="sm"
-        onClick={onAddCase}
+        onClick={onAddCaseAction}
         className="bg-emerald-600 hover:bg-emerald-500 text-white h-8 px-3 sm:px-4 rounded-md text-xs font-medium transition-all cursor-pointer"
       >
         <PlusCircle className="w-3.5 h-3.5 mr-1.5" />
@@ -40,7 +40,7 @@ export function ActionBar({ selectedCount, onDeleteSelected, onAddCase, onExport
 
       <Button
         size="sm"
-        onClick={onExport}
+        onClick={onExportAction}
         className="bg-amber-600 hover:bg-amber-500 text-white h-8 px-3 sm:px-4 rounded-md text-xs font-medium transition-all cursor-pointer"
       >
         <Download className="w-3.5 h-3.5 mr-1.5" />
@@ -56,7 +56,7 @@ export function ActionBar({ selectedCount, onDeleteSelected, onAddCase, onExport
               description: "Please select at least one case to delete.",
             });
           } else {
-            if (onDeleteSelected) onDeleteSelected();
+            if (onDeleteSelectedAction) onDeleteSelectedAction();
           }
         }}
         className="bg-rose-600 hover:bg-rose-500 text-white h-8 px-3 sm:px-4 rounded-md text-xs font-medium transition-all cursor-pointer"
