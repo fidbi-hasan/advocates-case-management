@@ -12,18 +12,18 @@ export default function DashboardLayout({
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-stone-50">
       {/* Top Header */}
-      <header className="h-14 sm:h-16 border-b border-slate-200 bg-white flex items-center justify-between px-3 sm:px-6 shrink-0 shadow-sm">
+      <header className="h-14 sm:h-16 border-b border-slate-200/70 bg-white/80 backdrop-blur-xl flex items-center justify-between px-3 sm:px-6 shrink-0 shadow-sm sticky top-0 z-40">
         <div className="flex items-center gap-2 sm:gap-3">
-          <div className="p-1.5 rounded-md bg-violet-50">
-            <Scale className="w-5 h-5 text-violet-600" strokeWidth={1.5} />
+          <div className="p-1.5 rounded-lg bg-slate-900">
+            <Scale className="w-5 h-5 text-amber-400" strokeWidth={1.5} />
           </div>
           <div>
-            <h1 className="text-sm font-semibold text-slate-800 tracking-tight">
+            <h1 className="text-sm font-bold text-slate-800 tracking-tight font-serif-display">
               Digital Chambers
             </h1>
-            <p className="text-[10px] text-slate-400 -mt-0.5 hidden sm:block">
+            <p className="text-[10px] text-slate-400 -mt-0.5 hidden sm:block font-body">
               Case Management System
             </p>
           </div>
@@ -33,18 +33,19 @@ export default function DashboardLayout({
           <Button
             variant="ghost"
             size="icon"
-            className="text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
+            className="text-slate-400 hover:text-amber-600 hover:bg-amber-50 cursor-pointer relative"
           >
             <Bell className="w-4 h-4" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-500 rounded-full" />
           </Button>
           <div className="h-6 w-px bg-slate-200 hidden sm:block" />
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-xs font-bold text-white">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center text-xs font-bold text-amber-400 ring-2 ring-amber-200/30">
               AK
             </div>
             <div className="hidden sm:block">
-              <p className="text-xs font-medium text-slate-700">Adv. Karim</p>
-              <p className="text-[10px] text-slate-400">Senior Partner</p>
+              <p className="text-xs font-semibold text-slate-700 font-body">Adv. Karim</p>
+              <p className="text-[10px] text-slate-400 font-body">Senior Partner</p>
             </div>
           </div>
           <Button

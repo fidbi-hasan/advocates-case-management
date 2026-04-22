@@ -13,7 +13,7 @@ import { CaseTable } from "@/components/dashboard/CaseTable";
 import { CaseDialog } from "@/components/dashboard/CaseDialog";
 import { getAllCases, getCasesByFilter, deleteCases } from "@/services/caseData";
 import type { LegalCase } from "@/data/mockCases";
-import { Briefcase, Filter, Zap } from "lucide-react";
+import { Briefcase, Filter, Zap, Scale, TrendingUp, Clock, Gavel } from "lucide-react";
 
 export default function DashboardPage() {
   const [cases, setCases] = useState<LegalCase[]>([]);
@@ -166,8 +166,13 @@ export default function DashboardPage() {
     toast.success("Data exported successfully!");
   }, [cases]);
 
+  // Compute quick stats
+  const niCount = cases.filter(c => c.caseType === "NI Act").length;
+  const araCount = cases.filter(c => c.caseType === "CR/ARA").length;
+  const pendingCount = cases.filter(c => c.status === "Pending").length;
+
   return (
-    <div className="space-y-4 sm:space-y-5 animate-fade-in">
+    <div className="space-y-4 sm:space-y-5 animate-fade-in font-body">
       {/* Case Dialog (Add/Edit) */}
       <CaseDialog 
         open={isDialogOpen} 
@@ -176,14 +181,35 @@ export default function DashboardPage() {
         initialData={editingCase}
       />
 
+      {/* Stats Row */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {[
+          { label: "Total Cases", value: cases.length, icon: Briefcase, color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-100" },
+          { label: "NI Act", value: niCount, icon: Gavel, color: "text-indigo-600", bg: "bg-indigo-50", border: "border-indigo-100" },
+          { label: "CR/ARA", value: araCount, icon: Scale, color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
+          { label: "Pending", value: pendingCount, icon: Clock, color: "text-rose-600", bg: "bg-rose-50", border: "border-rose-100" },
+        ].map((stat) => (
+          <div key={stat.label} className={`dashboard-card p-4 border ${stat.border}`}>
+            <div className="flex items-center justify-between mb-2">
+              <div className={`w-8 h-8 rounded-lg ${stat.bg} flex items-center justify-center`}>
+                <stat.icon className={`w-4 h-4 ${stat.color}`} />
+              </div>
+              <TrendingUp className="w-3.5 h-3.5 text-slate-300" />
+            </div>
+            <div className="text-xl font-bold text-slate-800">{loading ? "—" : stat.value}</div>
+            <div className="text-[11px] text-slate-500 mt-0.5">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-md bg-violet-50">
-            <Briefcase className="w-5 h-5 text-violet-600" />
+          <div className="p-2 rounded-lg bg-slate-900">
+            <Briefcase className="w-5 h-5 text-amber-400" />
           </div>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold text-slate-800 tracking-tight">
+            <h1 className="text-lg sm:text-xl font-bold text-slate-800 tracking-tight font-serif-display">
               Command Dashboard
             </h1>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -194,22 +220,22 @@ export default function DashboardPage() {
 
         <div className="flex items-center gap-2 flex-wrap">
           {isSearchActive && (
-            <div className="flex items-center gap-1.5 bg-violet-50 border border-violet-200 rounded-md px-3 py-1.5">
-              <Filter className="w-3 h-3 text-violet-600" />
-              <span className="text-[11px] text-violet-700 font-medium">
+            <div className="flex items-center gap-1.5 bg-indigo-50 border border-indigo-200 rounded-lg px-3 py-1.5">
+              <Filter className="w-3 h-3 text-indigo-600" />
+              <span className="text-[11px] text-indigo-700 font-medium">
                 Search Active
               </span>
             </div>
           )}
           {activeQuickFilter && (
-            <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-md px-3 py-1.5">
+            <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5">
               <Zap className="w-3 h-3 text-amber-600" />
               <span className="text-[11px] text-amber-700 font-medium capitalize">
                 {activeQuickFilter} Filter
               </span>
             </div>
           )}
-          <div className="bg-white border border-slate-200 rounded-md px-3 py-1.5 shadow-sm">
+          <div className="dashboard-card px-3 py-1.5">
             <span className="text-xs text-slate-500">
               Total: <span className="text-slate-800 font-semibold">{cases.length}</span> cases
             </span>
@@ -241,9 +267,9 @@ export default function DashboardPage() {
 
       {/* Data Table */}
       {loading ? (
-        <div className="bg-white rounded-md border border-slate-200 p-16 flex items-center justify-center shadow-sm">
+        <div className="dashboard-card p-16 flex items-center justify-center">
           <div className="flex flex-col items-center gap-3">
-            <div className="w-8 h-8 border-2 border-violet-200 border-t-violet-600 rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-amber-200 border-t-amber-600 rounded-full animate-spin" />
             <p className="text-sm text-slate-500">Loading cases...</p>
           </div>
         </div>
