@@ -265,8 +265,7 @@ export async function uploadCasePDF(
       .single();
 
     if (fetchError) throw fetchError;
-    const record = data as { pdf_urls: string[] | null };
-    const existingUrls = record?.pdf_urls || [];
+    const existingUrls = (data as any)?.pdf_urls || [];
 
     // 2. Upload to Storage using XMLHttpRequest for progress
     const url = await uploadWithProgress(filePath, file, onProgress);
@@ -377,8 +376,7 @@ export async function deleteCasePDF(caseId: string, pdfUrl: string): Promise<{ e
       .single();
 
     if (fetchError) throw fetchError;
-    const record = data as { pdf_urls: string[] | null };
-    const currentUrls = record?.pdf_urls || [];
+    const currentUrls = (data as any)?.pdf_urls || [];
     const updatedUrls = currentUrls.filter((url: string) => url !== pdfUrl);
 
     // 4. Update Database
